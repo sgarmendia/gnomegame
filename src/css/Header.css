@@ -1,18 +1,21 @@
 .header {
   background: rgb(40,52,59); /* Old browsers */
-  height: 100px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .searchBox {
   width: 50%;
   height: 50%;
+  margin: 10px auto;
   padding: 0px;
   background: none;
   border: none;
   text-align: center;
   font-size: 2em;
-  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  font-family: 'Coming Soon', cursive;
+  /* font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace; */
 }
 
 .searchBox:focus {
@@ -23,3 +26,28 @@
 .searchBox::-webkit-input-placeholder {
   text-align: center;
 }
+
+.filtergroup {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.filtergroup .slidevalue {
+  height: 20px;
+  width: 30px;
+  font-size: 2em;
+  color: white;
+  font-family: 'Coming Soon', cursive;
+}
+
+.radiogroup {
+  display: inline-flex;
+  justify-content: space-around;
+}
+
+.radiogroup div {
+  margin: 0 10px;
+}
+
+@import url('./Slider.css');
