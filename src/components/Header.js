@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../css/Header.css'
 
 
 class Header extends Component {
@@ -9,7 +10,7 @@ class Header extends Component {
         <input className='searchBox' 
                type='search'
                autoFocus='autofocus'
-               placeholder='Explore the world...'
+               placeholder='Search by name'
                onChange={this.props.search}
         />
       </div>

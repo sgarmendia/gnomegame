@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import BrastlewarkAPI from './Api/BrastlewarkAPI';
 import Gnomes from './components/Gnomes';
 import Header from './components/Header';
+import Overlay from './components/Overlay';
 
 
 class App extends Component {
   constructor(props) {
     super(props);
       this.state = {
-        brastlewarkData: [],
+        data: [],
+        gnomes: [],
+        selectedGnome: {},
         overlay: false,
         error: null,
       }
@@ -21,8 +24,8 @@ class App extends Component {
 
   getData = async () => {
     try {
-      const brastlewarkData = await BrastlewarkAPI.fetchData()
-      if(this.mounted) { this.setState({ brastlewarkData }) }
+      const data = await BrastlewarkAPI.fetchData()
+      if(this.mounted) { this.setState({ data, gnomes: data }) }
     } catch (error) {
       if(this.mounted) { this.setState({ error }) }
     }
@@ -30,11 +33,20 @@ class App extends Component {
 
   
   handleSearch = e => {
-    const search = e.target.value
+    const gnomes = this.state.data.filter(g => g.name.toLowerCase().includes(e.target.value.toLowerCase()))
+    this.setState({ gnomes });
+
   }
 
   handleClick = e => {
+    const selectedGnome = this.state.gnomes.find(g => g.id === +e.target.id)
+    this.setState({ selectedGnome },() => {
+      this.setState({ overlay: true });
+    });
+  }
 
+  handleHide = e => {
+    this.setState({ overlay: false, selectedGnome: {} });
   }
 
   componentWillUnmount() {
@@ -49,10 +61,15 @@ class App extends Component {
         {this.state.error
           ? <h2>Oops, something went wrong!</h2>
           : <Gnomes 
-              data={this.state.brastlewarkData}
+              data={this.state.gnomes}
               selected={this.handleClick}
             />
         }
+        <Overlay 
+          data={this.state.selectedGnome}
+          display={this.state.overlay}
+          unselect={this.handleHide}
+        />
       </div>
     )
   }

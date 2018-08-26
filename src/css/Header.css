@@ -1,0 +1,25 @@
+.header {
+  background: rgb(40,52,59); /* Old browsers */
+  height: 100px;
+  padding: 20px;
+}
+
+.searchBox {
+  width: 50%;
+  height: 50%;
+  padding: 0px;
+  background: none;
+  border: none;
+  text-align: center;
+  font-size: 2em;
+  font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+}
+
+.searchBox:focus {
+  outline:none;
+  border-bottom: 2px solid rgb(87, 88, 90);
+}
+
+.searchBox::-webkit-input-placeholder {
+  text-align: center;
+}
