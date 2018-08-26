@@ -7,14 +7,14 @@ import Overlay from './components/Overlay';
 
 class App extends Component {
   constructor(props) {
-    super(props);
-      this.state = {
-        data: [],
-        gnomes: [],
-        selectedGnome: {},
-        overlay: false,
-        error: null,
-      }
+  super(props);
+    this.state = {
+      data: [],
+      gnomes: [],
+      selectedGnome: {},
+      overlay: false,
+      error: null,
+    }
   }
 
   componentDidMount() {
@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   handleClick = e => {
-    const selectedGnome = this.state.gnomes.find(g => g.id === +e.target.id)
+    const selectedGnome = this.state.data.find(g => g.id === +e.target.id)
     this.setState({ selectedGnome },() => {
       this.setState({ overlay: true });
     });
@@ -49,6 +49,12 @@ class App extends Component {
     this.setState({ overlay: false, selectedGnome: {} });
   }
 
+  handleSlide = (value,att) => {
+    const attribute = att.toLowerCase()
+    const gnomes = this.state.data.filter(g => +g[attribute] <= +value)
+    this.setState({ gnomes });
+  } 
+
   componentWillUnmount() {
     this.mounted = false
   }
@@ -57,7 +63,11 @@ class App extends Component {
   render() {
     return (
       <div className='container'>
-        <Header search={this.handleSearch} />
+        <Header 
+          data={this.state.data}
+          search={this.handleSearch}
+          slide={this.handleSlide}
+        />
         {this.state.error
           ? <h2>Oops, something went wrong!</h2>
           : <Gnomes 

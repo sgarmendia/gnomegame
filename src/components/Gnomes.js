@@ -10,7 +10,7 @@ class Photos extends Component {
         {this.props.data && this.props.data.map(gnome => {
           return (
             <div key={gnome.id} className='imgContainer'>
-                <img src={gnome.thumbnail} alt='Gnome Image'
+                <img src={gnome.thumbnail} alt={gnome.name}
                      onClick={this.props.selected}
                      id={gnome.id}
                 />
