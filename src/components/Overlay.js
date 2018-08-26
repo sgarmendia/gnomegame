@@ -5,16 +5,17 @@ import './../css/Overlay.css';
 class Overlay extends Component {
   render() {
     const { display, unselect } = this.props
-    const { thumbnail, name, age, weight, height, hair_color } = this.props.data
     return (
       <div className='overlay' 
            style={{ display: `${display ? 'block' : 'none'}` }}
            onClick={unselect}>
-        <img src={thumbnail} alt='thumbnail'/>
-        <div className='overlayTitle'>Name: {name ? name : 'N/A'}</div>
-        <div className='overlayOwner'>Age: {age ? age : 'N/A'}</div>
-        <div className='overlayInfo'>Weight & Height: {`${weight} ${height}`}</div>
-        <div className='overlayDate'>Hair: {hair_color ? hair_color : 'N/A'}</div>
+        <img src={this.props.data && this.props.data.thumbnail} alt='thumbnail'/>
+        <div className='overlayTitle'>Name: {this.props.data ? this.props.data.name : 'N/A'}</div>
+        <div className='overlayOwner'>Age: {this.props.data ? this.props.data.age : 'N/A'}</div>
+        <div className='overlayInfo'>
+          Weight & Height: {`${this.props.data ? this.props.data.weight : 'N/A'} ${this.props.data ? this.props.data.height : 'N/A'}`}
+        </div>
+        <div className='overlayDate'>Hair: {this.props.data ? this.props.data.hair_color : 'N/A'}</div>
       </div>
     )
   }
