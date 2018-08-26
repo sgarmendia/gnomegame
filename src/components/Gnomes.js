@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../css/Gnomes.css'
 
 
 class Photos extends Component {
@@ -11,6 +12,7 @@ class Photos extends Component {
             <div key={gnome.id} className='imgContainer'>
                 <img src={gnome.thumbnail} alt='Gnome Image'
                      onClick={this.props.selected}
+                     id={gnome.id}
                 />
                 <div className='gnomeInfo' >{gnome.name}</div> 
             </div>
