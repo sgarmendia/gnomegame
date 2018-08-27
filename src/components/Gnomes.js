@@ -6,12 +6,12 @@ import orc from '../css/Assets/orc.png';
 
 class Photos extends Component {
   render() {
-    return (this.props.data.length === 0 
+    return (this.props.data && this.props.data.length === 0 
     ? <div className='emptygnomes'>
           <img src={orc} alt={'No gnomes'} />
       </div>
     : <div className='gnomeContainer'>
-        {this.props.data.map(gnome => {
+        {this.props.data && this.props.data.map(gnome => {
           return (
             <div key={gnome.id} className='imgContainer'>
                 <img src={gnome.thumbnail} alt={gnome.name}

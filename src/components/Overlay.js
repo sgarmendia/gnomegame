@@ -18,7 +18,7 @@ class Overlay extends Component {
           </div>
           <div className='overlayOwner'>Age: {this.props.selected ? this.props.selected.age : 'N/A'}</div>
           <div className='overlayDate'>Hair: {this.props.selected ? this.props.selected.hair_color : 'N/A'}</div>
-          <Friends friends={this.props.selected.friends} data={this.props.data} />
+          <Friends friends={this.props.selected && this.props.selected.friends} data={this.props.data} />
         </div>
       </div>
     )

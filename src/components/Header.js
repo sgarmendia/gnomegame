@@ -107,7 +107,7 @@ class Header extends Component {
           <img src={gnomehead} alt="gnomehead" width={100} height={100}/>
         </div>
         <span className='slidevalue'>Filter by:</span><br/>
-        {this.props.data.length > 0 &&
+        {(this.props.data && this.props.data.length) > 0 &&
         <div className='filtergroup'>
           <div className='range'>
             <div className='slide'>
