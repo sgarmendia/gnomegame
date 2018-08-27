@@ -43,13 +43,13 @@
   align-items: center;
 }
 
-.hairColor {
+.hairColor , .professions {
   margin: 20px 0;
   display: inline-flex;
   flex-wrap: wrap;
 }
 
-.hairColor div{
+.hairColor div , .professions div{
   margin: 0 30px;
   font-size: 1em;
   font-family: 'Coming Soon', cursive;

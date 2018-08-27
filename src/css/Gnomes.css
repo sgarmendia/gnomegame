@@ -12,6 +12,7 @@
   width:  100%;
   height: 250px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .imgContainer:hover{
