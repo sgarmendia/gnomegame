@@ -1,9 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme';
 import Overlay from '../Overlay';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Overlay />, div);
-  ReactDOM.unmountComponentAtNode(div);
+it('shallow renders correctly', () => {
+  shallow(<Overlay />);
 });
