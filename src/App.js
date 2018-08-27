@@ -15,6 +15,7 @@ class App extends Component {
       weight: [],
       height: [],
       hairColor: [],
+      search: [],
       selectedGnome: {},
       overlay: false,
       error: null,
@@ -29,7 +30,7 @@ class App extends Component {
   getData = async () => {
     try {
       const data = await BrastlewarkAPI.fetchData()
-      if(this.mounted) { this.setState({ data, gnomes: data }) }
+      if(this.mounted) { this.setState({ data, gnomes: data, search: data }) }
     } catch (error) {
       if(this.mounted) { this.setState({ error }) }
     }
@@ -47,7 +48,7 @@ class App extends Component {
   }
 
   handleSearch = e => {
-    const search = this.state.data.filter(g => g.name.toLowerCase().includes(e.target.value.toLowerCase()))
+    const search = this.state.data.filter(g => g.name.toLowerCase().includes(e.toLowerCase()))
     this.setState({ search },() => {
       this.globalFilter()
     });
@@ -81,7 +82,7 @@ class App extends Component {
   }
 
   globalFilter = () => {
-    const searchSet = new Set(this.state.search ? this.state.search : this.state.data)
+    const searchSet = new Set(this.state.search)
     const ageSet = new Set(this.state.age.length === 0 ? this.state.data : this.state.age)
     const weightSet = new Set(this.state.weight.length === 0 ? this.state.data : this.state.weight)
     const heightSet = new Set(this.state.height.length === 0 ? this.state.data : this.state.height)
@@ -97,16 +98,6 @@ class App extends Component {
     this.setState({ gnomes });
   }
 
-  clearSearch = () => {
-    this.setState({
-      gnomes: this.state.data,
-      age: [],
-      weight: [],
-      height: [],
-      hairColor: [],
-    });
-  }
-
   componentWillUnmount() {
     this.mounted = false
   }
@@ -117,10 +108,10 @@ class App extends Component {
       <div className='container'>
         <Header 
           data={this.state.data}
+          results={this.state.gnomes.length}
           search={this.handleSearch}
           slide={this.handleSlide}
           color={this.colorFilter}
-          clear={this.clearSearch}
         />
         {this.state.error
           ? <h2>Oops, something went wrong!</h2>
