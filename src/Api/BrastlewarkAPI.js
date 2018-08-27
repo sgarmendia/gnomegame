@@ -1,6 +1,6 @@
 function BrastlewarkAPI() {
 
-  function fetchData(tag) {
+  function fetchData() {
     const url = `https://raw.githubusercontent.com/rrafols/mobile_test/master/data.json`
     return new Promise ((resolve,reject) => {
       fetch(url)
