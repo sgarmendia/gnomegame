@@ -2,50 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 //import Range from 'rc-slider/lib/Range';
 import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import '../css/Header.css'
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
-const Handle = Slider.Handle;
-
-/* const handle = (props) => {
-  const { value, dragging, index, ...restProps } = props;
-  return (
-    <Tooltip
-      prefixCls="rc-slider-tooltip"
-      overlay={value}
-      visible={dragging}
-      placement="top"
-      key={index}
-    >
-      <Handle value={value} {...restProps} />
-    </Tooltip>
-  );
-}; */
-
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      age: '',
-      weight: '',
-      height: '',
-    }
-  }
-
-  componentDidMount() {
-
-    this.setState({  });
-  }
-  
-
-  handleRadioClick = e => {
-    this.setState({ checked: e.target.value });
-  }
+  state = {}
 
   getMax = (attr) => {
     const att = attr.toLowerCase()
@@ -58,7 +23,6 @@ class Header extends Component {
   }
 
   onClickColor = e => {
-    console.log(e.target.id);
     const color = e.target.id
     this.setState({ color: color },()=>{
       this.props.color(color)
@@ -91,9 +55,15 @@ class Header extends Component {
     this.props.slide(e,'height')
   }
 
-  onClear = () => {
-    this.props.clear()
-    this.setState({ color: undefined });
+  onSearch = e => {
+    const search = e.target.value
+      this.props.search(search)
+  }
+
+  onClearColor = () => {
+    this.setState({ color: undefined },()=>{
+      this.props.color('')
+    });
   }
 
   render() {
@@ -103,10 +73,9 @@ class Header extends Component {
         <input className='searchBox' 
                type='search'
                autoFocus='autofocus'
-               placeholder='Search by name'
-               onChange={this.props.search}
+               placeholder='Search gnomes by name'
+               onChange={this.onSearch}
         />
-        <button className='clearbutton' onClick={this.onClear}>CLEAR</button>
         </div>
         <span className='slidevalue'>Filter by:</span>
         {this.props.data.length > 0 &&
@@ -139,7 +108,12 @@ class Header extends Component {
           </div>
           <div className='hairColor'>
             <span className='slidevalue'>Hair color:</span>
+            <div onClick={this.onClearColor}
+              style={{ color: 'white', cursor: 'pointer'}}>
+              None
+            </div>
             {this.getColors()}
+            <span className='slidevalue'>Results:   {this.props.results}</span>
           </div>
         </div>}
       </div>
@@ -149,6 +123,10 @@ class Header extends Component {
 
 Header.propTypes = {
   search: PropTypes.func,
+  slide: PropTypes.func,
+  data: PropTypes.array,
+  results: PropTypes.number,
+  color: PropTypes.func,
 };
 
 export default Header;
