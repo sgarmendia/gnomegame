@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Friends from './Friends';
 import './../css/Overlay.css';
 
 class Overlay extends Component {
@@ -9,13 +10,16 @@ class Overlay extends Component {
       <div className='overlay' 
            style={{ display: `${display ? 'block' : 'none'}` }}
            onClick={unselect}>
-        <img src={this.props.data && this.props.data.thumbnail} alt='thumbnail'/>
-        <div className='overlayTitle'>Name: {this.props.data ? this.props.data.name : 'N/A'}</div>
-        <div className='overlayOwner'>Age: {this.props.data ? this.props.data.age : 'N/A'}</div>
-        <div className='overlayInfo'>
-          Weight & Height: {`${this.props.data ? this.props.data.weight : 'N/A'} ${this.props.data ? this.props.data.height : 'N/A'}`}
+        <img className='overlayimg' src={this.props.selected && this.props.selected.thumbnail} alt='thumbnail'/>
+        <div className='friendsdata'>
+          <div className='overlayTitle'>Name: {this.props.selected ? this.props.selected.name : 'N/A'}</div>
+          <div className='overlayInfo'>
+            Weight & Height: {`${this.props.selected ? this.props.selected.weight : 'N/A'} - ${this.props.selected ? this.props.selected.height : 'N/A'}`}
+          </div>
+          <div className='overlayOwner'>Age: {this.props.selected ? this.props.selected.age : 'N/A'}</div>
+          <div className='overlayDate'>Hair: {this.props.selected ? this.props.selected.hair_color : 'N/A'}</div>
+          <Friends friends={this.props.selected.friends} data={this.props.data} />
         </div>
-        <div className='overlayDate'>Hair: {this.props.data ? this.props.data.hair_color : 'N/A'}</div>
       </div>
     )
   }
@@ -23,9 +27,9 @@ class Overlay extends Component {
 
 Overlay.propTypes = {
   display: PropTypes.bool,
-  data: PropTypes.object,
-  src: PropTypes.string,
+  data: PropTypes.array,
   unselect: PropTypes.func,
+  selected: PropTypes.object,
 };
 
 export default Overlay;
