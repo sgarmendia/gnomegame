@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
+import gnomehead from '../css/Assets/gnomehead.png';
 import '../css/Header.css'
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
@@ -24,8 +25,15 @@ class Header extends Component {
 
   onClickColor = e => {
     const color = e.target.id
-    this.setState({ color: color },()=>{
+    this.setState({ color },()=>{
       this.props.color(color)
+    });
+  }
+
+  onClickProf = e => {
+    const prof = e.target.id
+    this.setState({ prof },()=>{
+      this.props.prof(prof)
     });
   }
 
@@ -35,9 +43,22 @@ class Header extends Component {
       .map((color,i) => (
         <div key={i} onClick={this.onClickColor} id={color}
             style={{ color: `${color.toLowerCase()}`, 
-                     cursor: 'pointer', 
-                     backgroundColor: `${this.state.color === color ? color.toLowerCase() : 'transparent'}`}}>
+                     cursor: 'pointer', borderRadius: '5px',
+                     border: `${this.state.color === color ? `1px solid ${color.toLowerCase()}` : 'none'}`}}>
           {color}
+        </div>
+      )
+    )
+  }
+
+  getProfessions = () => {
+    return this.props.data.length > 0 && this.props.data
+      .reduce((acc,cur) => [...acc , ...cur.professions.filter(prof => !acc.includes(prof))] , [])
+      .map((prof,i) => (
+        <div key={i} onClick={this.onClickProf} id={prof}
+            style={{ cursor: 'pointer', borderRadius: '5px', color: 'white',
+                     border: `${this.state.prof === prof ? '1px solid grey' : 'none'}`}}>
+          {prof}
         </div>
       )
     )
@@ -66,18 +87,26 @@ class Header extends Component {
     });
   }
 
+  onClearProf = () => {
+    this.setState({ prof: undefined },()=>{
+      this.props.prof('')
+    });
+  }
+
   render() {
     return (
       <div className='header'>
         <div className='searchgroup'>
-        <input className='searchBox' 
-               type='search'
-               autoFocus='autofocus'
-               placeholder='Search gnomes by name'
-               onChange={this.onSearch}
-        />
+          <img src={gnomehead} alt="gnomehead" width={100} height={100}/>
+          <input className='searchBox' 
+                type='search'
+                autoFocus='autofocus'
+                placeholder='Search gnomes by name'
+                onChange={this.onSearch}
+          />
+          <img src={gnomehead} alt="gnomehead" width={100} height={100}/>
         </div>
-        <span className='slidevalue'>Filter by:</span>
+        <span className='slidevalue'>Filter by:</span><br/>
         {this.props.data.length > 0 &&
         <div className='filtergroup'>
           <div className='range'>
@@ -107,14 +136,22 @@ class Header extends Component {
             </div>
           </div>
           <div className='hairColor'>
-            <span className='slidevalue'>Hair color:</span>
+            <span className='slidevalue' style={{borderBottom: '1px solid'}}>Hair color:</span>
             <div onClick={this.onClearColor}
               style={{ color: 'white', cursor: 'pointer'}}>
               None
             </div>
             {this.getColors()}
-            <span className='slidevalue'>Results:   {this.props.results}</span>
           </div>
+          <div className='professions'>
+            <span className='slidevalue' style={{borderBottom: '1px solid'}}>Professions:</span>
+            <div onClick={this.onClearProf}
+              style={{ color: 'white', cursor: 'pointer'}}>
+              None
+            </div>
+            {this.getProfessions()}
+          </div>
+          <span className='slidevalue'><h3>Results:   {this.props.results}</h3></span>
         </div>}
       </div>
     );

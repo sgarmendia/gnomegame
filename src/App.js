@@ -15,6 +15,7 @@ class App extends Component {
       weight: [],
       height: [],
       hairColor: [],
+      profession: [],
       search: [],
       selectedGnome: {},
       overlay: false,
@@ -81,18 +82,27 @@ class App extends Component {
     });
   }
 
+  profFilter = (prof) => {
+    const profession = this.state.data.filter(g => g.professions.includes(prof))
+    this.setState({ profession },() => {
+      this.globalFilter()
+    });
+  }
+
   globalFilter = () => {
     const searchSet = new Set(this.state.search)
     const ageSet = new Set(this.state.age.length === 0 ? this.state.data : this.state.age)
     const weightSet = new Set(this.state.weight.length === 0 ? this.state.data : this.state.weight)
     const heightSet = new Set(this.state.height.length === 0 ? this.state.data : this.state.height)
     const hairSet = new Set(this.state.hairColor.length === 0 ? this.state.data : this.state.hairColor)
+    const professionSet = new Set(this.state.profession.length === 0 ? this.state.data : this.state.profession)
     const intersection = new Set(
       [...searchSet]
         .filter(g => ageSet.has(g))
         .filter(g => weightSet.has(g))
         .filter(g => heightSet.has(g))
         .filter(g => hairSet.has(g))
+        .filter(g => professionSet.has(g))
     )
     const gnomes = [...intersection]
     this.setState({ gnomes });
@@ -112,6 +122,7 @@ class App extends Component {
           search={this.handleSearch}
           slide={this.handleSlide}
           color={this.colorFilter}
+          prof={this.profFilter}
         />
         {this.state.error
           ? <h2>Oops, something went wrong!</h2>
@@ -121,7 +132,8 @@ class App extends Component {
             />
         }
         <Overlay 
-          data={this.state.selectedGnome}
+          data={this.state.data}
+          selected={this.state.selectedGnome}
           display={this.state.overlay}
           unselect={this.handleHide}
         />
