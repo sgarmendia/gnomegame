@@ -84,4 +84,6 @@ The only npm library used is `rc-slider` [https://www.npmjs.com/package/rc-slide
 
 On the header the user will find several filtering options for the data. The user may filter searching the name, moving the sliders for filtering by age, weight and height. Finally there is a clickable list of hair colors and professions. The filters are designed to work in conjunction to render the elements that contain all the parameteres filtered.
 
+On clicking on each image card an overlay is rendered with the information for each gnome and his/her friends are shown.
+
 made by: Simon Garmendia
